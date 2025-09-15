@@ -39,9 +39,7 @@ export default function LoginForm({ onLogin }) {
 
     try {
       const data = await login(email.trim(), password);
-      // suponiendo que login devuelve { token } en caso exitoso
       if (data && data.token) {
-        // guardar token y notificar al parent
         localStorage.setItem("token", data.token);
         onLogin(data.token);
 
@@ -49,10 +47,9 @@ export default function LoginForm({ onLogin }) {
         setError("");
         setUserNotFound(false);
 
-        // redirigir al home después de una pequeña pausa para ver el mensaje
         setTimeout(() => navigate("/"), 900);
       } else {
-        // manejo de errores según código devuelto por backend
+
         setSuccess("");
         if (data && data.code === "USER_NOT_FOUND") {
           setUserNotFound(true);
@@ -66,7 +63,6 @@ export default function LoginForm({ onLogin }) {
         }
       }
     } catch (err) {
-      // error de red u otro problema
       console.error("Login error:", err);
       setError("No se pudo conectar al servidor. Intenta más tarde.");
     } finally {

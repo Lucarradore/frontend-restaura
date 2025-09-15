@@ -45,7 +45,6 @@ const cart = (location.state && location.state.cart) || ctxCart || [];
       <div className="form-content">
         <h2 className="form-title">Confirmación de Compra</h2>
 
-        {/* Lista de productos seleccionados */}
         <ul style={{ marginBottom: 24 }}>
           {cart.map((item) => (
             <li key={item.id} style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>

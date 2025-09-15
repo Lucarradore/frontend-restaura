@@ -1,8 +1,6 @@
-// src/api/users.js
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
 import { authHeader } from "./auth";
 
-// Obtener todos los usuarios (ruta protegida)
 export async function getUsers() {
   const res = await fetch(`${API_BASE}/users`, {
     method: "GET",
@@ -13,7 +11,6 @@ export async function getUsers() {
   });
 
   if (res.status === 401) {
-    // Token inválido o expirado
     localStorage.removeItem("token");
     throw new Error("Sesión expirada. Volvé a iniciar sesión.");
   }
@@ -26,7 +23,6 @@ export async function getUsers() {
   return res.json();
 }
 
-// (Opcional) obtener un usuario por id
 export async function getUserById(userId) {
   const res = await fetch(`${API_BASE}/users/${userId}`, {
     method: "GET",

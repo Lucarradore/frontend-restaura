@@ -139,7 +139,9 @@ const Navbar = () => {
                     className="confirm btn secondary"
                     onClick={() => {
                       toggleCart();
-                      navigate("/dishesConfirm", { state: { cart } });
+                      setTimeout(() => {
+                        navigate("/dishesConfirm", { state: { cart } });
+                      }, 50);
                     }}
                   >
                     Confirmar compra
@@ -204,5 +206,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-

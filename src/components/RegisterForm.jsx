@@ -1,4 +1,3 @@
-// src/components/RegisterForm.jsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../api/auth";
@@ -12,7 +11,7 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [toast, setToast] = useState(null); // { text, type }
+  const [toast, setToast] = useState(null); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
@@ -74,15 +73,12 @@ export default function RegisterForm() {
         return;
       }
 
-      // Todas las validaciones pasaron → registrar
       setIsSubmitting(true);
       showToast("Registrando...", "info");
       try {
-        // 🔹 Importante: el orden de parámetros debe coincidir con auth.js
         const data = await register(name, lastName, email, password);
 
         if (data && data.token) {
-          // Guardar token y usuario en localStorage
           localStorage.setItem("token", data.token);
           if (data.user) {
             localStorage.setItem("user", JSON.stringify(data.user));
@@ -100,7 +96,6 @@ export default function RegisterForm() {
         setIsSubmitting(false);
       }
     } else {
-      // Avanzar al siguiente paso
       showToast(`✔ Paso ${step} completado`);
       setTimeout(() => setStep((s) => s + 1), 450);
     }
@@ -206,7 +201,6 @@ export default function RegisterForm() {
         </div>
       </form>
 
-      {/* Toast flotante */}
       {toast && (
         <div className={`floating-toast ${toast.type === "info" ? "info" : "ok"}`}>
           {toast.text}

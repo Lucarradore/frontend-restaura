@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FaUserCircle } from "react-icons/fa";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import "../../css/auth.css"; // Asegúrate de importar el CSS
+import "../../css/auth.css";
 
 export default function AuthIcon({ onLogin }) {
   const [showLogin, setShowLogin] = useState(false);
@@ -16,7 +16,7 @@ export default function AuthIcon({ onLogin }) {
 
   const handleRegister = () => {
     setShowRegister(false);
-    setShowLogin(true); // Después de registrar, muestra login
+    setShowLogin(true);
   };
 
   const handleShowRegister = () => {

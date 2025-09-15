@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"; // Correcto
+import { createSlice } from "@reduxjs/toolkit"; 
 
 const initialState = {
   dishes: [
@@ -23,7 +23,6 @@ const dishesSlice = createSlice({
   name: "dishes",
   initialState,
   reducers: {
-    // Define tus reducers aquí
   },
 });
 

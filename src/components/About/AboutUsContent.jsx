@@ -4,7 +4,6 @@ import aboutImageUno from "../../assets/about1.jpg";
 import aboutImageDos from "../../assets/about2.jpg";
 import "../../../css/about.css";
 
-// Componente para títulos
 const SectionTitle = ({ title }) => (
   <>
     <motion.h2
@@ -24,7 +23,6 @@ const SectionTitle = ({ title }) => (
   </>
 );
 
-// Componente para párrafos
 const SectionParagraph = ({ children }) => (
   <motion.p
     className="section-paragraph"

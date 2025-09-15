@@ -1,4 +1,3 @@
-// src/components/dishes/DishCard.jsx
 import PropTypes from "prop-types";
 import { useCart } from "../../context/CartContext";
 import toast from "react-hot-toast";
@@ -8,15 +7,11 @@ const DishCard = ({ dish, showDetails = false }) => {
   const { addToCart } = useCart();
 
   const handleAdd = () => {
-    // Garantizamos quantity por si acaso
     const item = { ...dish, quantity: 1 };
     addToCart(item);
 
-    // Toast de confirmación (aparece en la esquina, se cierra solo)
     toast.success(`${dish.title} agregado al carrito`, {
       duration: 3000,
-      // opcional: icono personalizado
-      // icon: '🧾'
     });
   };
 
@@ -45,7 +40,6 @@ DishCard.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    // quantity es opcional cuando viene del listado
     quantity: PropTypes.number,
   }).isRequired,
   showDetails: PropTypes.bool,

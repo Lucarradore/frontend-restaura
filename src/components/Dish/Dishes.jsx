@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import DishCard from "./DishCard"
-import dish1 from "../../assets/dishes/dish1.jpeg"; // Ruta relativa correcta
+import dish1 from "../../assets/dishes/dish1.jpeg"; 
 import dish2 from "../../assets/dishes/dish2.jpeg";
 import dish3 from "../../assets/dishes/dish3.jpeg";
 import dish4 from "../../assets/dishes/dish4.jpeg";
@@ -27,7 +27,7 @@ import dish22 from "../../assets/dishes/dish22.jpg";
 import dish23 from "../../assets/dishes/dish23.jpg";
 import dish24 from "../../assets/dishes/dish24.jpg";
 import dish25 from "../../assets/dishes/dish25.jpg";
-import "../../../css/dish.css"; // Ruta relativa correcta
+import "../../../css/dish.css"; 
 
 const DISHES = [
   { id: 1, image: dish1, title: "Cielo de Tomate", description: "Sopa de tomate asado con albahaca fresca y un toque de queso rallado.", category: "Sopas", price: 10000 },
@@ -63,7 +63,6 @@ const Dishes = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const navigate = useNavigate();
 
-  // Usa el contexto global del carrito
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
 
   const filteredDishes =
@@ -71,7 +70,6 @@ const Dishes = () => {
       ? DISHES
       : DISHES.filter((dish) => dish.category === selectedCategory);
 
-  // Calcula el total a pagar
   const totalToPay = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const confirmPurchase = () => {

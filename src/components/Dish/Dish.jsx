@@ -1,6 +1,6 @@
-import HeroSection from "../Hero/HeroSection"; // Ruta relativa correcta
-import Dishes from "./Dishes"; // Ruta relativa correcta
-import "../../../css/index.css"; // Ruta relativa correcta
+import HeroSection from "../Hero/HeroSection"; 
+import Dishes from "./Dishes"; 
+import "../../../css/index.css"; 
 
 const Dish = () => {
   return (

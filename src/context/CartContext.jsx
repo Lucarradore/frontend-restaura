@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useReducer, useCallback } from "r
 const CartContext = createContext();
 
 const initialState = {
-  items: [], // { id, title, price, image, quantity }
+  items: [], 
   showCart: false,
 };
 
@@ -30,7 +30,6 @@ function reducer(state, action) {
     }
     case "DECREASE": {
       const id = action.payload;
-      // reducimos y eliminamos si llega a 0
       const items = state.items
         .map(i => i.id === id ? { ...i, quantity: (i.quantity || 0) - 1 } : i)
         .filter(i => i.quantity > 0);
@@ -48,7 +47,6 @@ function reducer(state, action) {
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Init from localStorage
   useEffect(() => {
     try {
       const raw = localStorage.getItem("cart_v1");
@@ -61,7 +59,6 @@ export function CartProvider({ children }) {
     }
   }, []);
 
-  // Persist
   useEffect(() => {
     try {
       localStorage.setItem("cart_v1", JSON.stringify(state.items));
@@ -70,7 +67,6 @@ export function CartProvider({ children }) {
     }
   }, [state.items]);
 
-  // Debugging: log cambios (podés quitar en producción)
   useEffect(() => {
     console.log("Cart updated:", state.items);
   }, [state.items]);

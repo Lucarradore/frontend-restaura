@@ -1,6 +1,6 @@
-import { DISHES } from "../../constants"; // Ruta relativa correcta
-import DishCard from "./DishCard"; // Ruta relativa correcta
-import "../../../css/index.css"; // Ruta relativa correcta
+import { DISHES } from "../../constants"; 
+import DishCard from "./DishCard"; 
+import "../../../css/index.css"; 
 
 const DishContent = () => {
   return (

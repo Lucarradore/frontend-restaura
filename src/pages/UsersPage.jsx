@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUsers } from "../api/users"; // función que hace fetch a /users
+import { getUsers } from "../api/users"; 
 import { useNavigate } from "react-router-dom";
 
 export default function UsersPage() {
@@ -10,7 +10,7 @@ export default function UsersPage() {
     async function fetchUsers() {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate("/login"); // 🔒 redirige si no hay token
+        navigate("/login"); 
         return;
       }
 

@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState } from "react"; 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -16,7 +15,7 @@ import SobreNosotros from "./components/About/AboutUs";
 import DishesConfirm from "./components/Dish/DishesConfirm"; 
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
-import UsersPage from "./components/UsersPage";
+import UsersPage from "./pages/UsersPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "../css/index.css";
 import "../css/auth.css";
@@ -79,8 +78,21 @@ function App() {
           }
         />
 
+        {/* Ruta original que tenías */}
         <Route
           path="/confirmationForm"
+          element={
+            <main className="main-container">
+              <DishesConfirm />
+            </main>
+          }
+        />
+
+        {/* RUTA ADICIONAL para que la navegación desde Navbar navegue correctamente.
+            El Navbar hace navigate("/dishesConfirm", { state: { cart } });
+            Con esto no hace falta cambiar nada más en el Navbar. */}
+        <Route
+          path="/dishesConfirm"
           element={
             <main className="main-container">
               <DishesConfirm />
@@ -105,4 +117,3 @@ function App() {
 }
 
 export default App;
-
