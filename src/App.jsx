@@ -77,8 +77,6 @@ function App() {
             </main>
           }
         />
-
-        {/* Ruta original que tenías */}
         <Route
           path="/confirmationForm"
           element={
@@ -87,10 +85,6 @@ function App() {
             </main>
           }
         />
-
-        {/* RUTA ADICIONAL para que la navegación desde Navbar navegue correctamente.
-            El Navbar hace navigate("/dishesConfirm", { state: { cart } });
-            Con esto no hace falta cambiar nada más en el Navbar. */}
         <Route
           path="/dishesConfirm"
           element={
