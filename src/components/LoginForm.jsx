@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { login } from "../api/auth";
+import { loginUser } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginForm({ onLogin }) {
@@ -8,62 +8,37 @@ export default function LoginForm({ onLogin }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [userNotFound, setUserNotFound] = useState(false);
-  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const resetMessages = () => {
     setError("");
     setUserNotFound(false);
-    setSuccess("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     resetMessages();
 
-    if (!email && !password) {
+    if (!email || !password) {
       setError("Por favor ingrese email y contraseña.");
-      return;
-    }
-    if (!email) {
-      setError("Por favor ingrese el email.");
-      return;
-    }
-    if (!password) {
-      setError("Por favor ingrese la contraseña.");
       return;
     }
 
     setIsLoading(true);
-
     try {
-      const data = await login(email.trim(), password);
+      const data = await loginUser({ email: email.trim(), password });
+
       if (data && data.token) {
-        localStorage.setItem("token", data.token);
-        onLogin(data.token);
-
-        setSuccess("¡Inicio de sesión exitoso!");
-        setError("");
-        setUserNotFound(false);
-
-        setTimeout(() => navigate("/"), 900);
+        if (onLogin) onLogin(data.token);
+        navigate("/");
       } else {
-
-        setSuccess("");
-        if (data && data.code === "USER_NOT_FOUND") {
-          setUserNotFound(true);
-          setError("");
-        } else if (data && data.code === "INVALID_PASSWORD") {
-          setError("Contraseña incorrecta.");
-          setUserNotFound(false);
-        } else {
-          setError(data?.error || "Error al iniciar sesión");
-          setUserNotFound(false);
-        }
+        if (data?.code === "USER_NOT_FOUND") setUserNotFound(true);
+        else if (data?.code === "INVALID_PASSWORD") setError("Contraseña incorrecta.");
+        else setError(data?.error || "Error al iniciar sesión");
       }
     } catch (err) {
-      console.error("Login error:", err);
+      console.error(err);
       setError("No se pudo conectar al servidor. Intenta más tarde.");
     } finally {
       setIsLoading(false);
@@ -74,30 +49,12 @@ export default function LoginForm({ onLogin }) {
     <form onSubmit={handleSubmit} className="login-form" noValidate>
       <div className="field">
         <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="email@ejemplo.com"
-          autoComplete="email"
-          disabled={isLoading}
-          required
-        />
+        <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email@ejemplo.com" disabled={isLoading} required />
       </div>
 
       <div className="field">
         <label htmlFor="password">Contraseña</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña"
-          autoComplete="current-password"
-          disabled={isLoading}
-          required
-        />
+        <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" disabled={isLoading} required />
       </div>
 
       <div className="actions" style={{ marginTop: 12 }}>
@@ -106,36 +63,12 @@ export default function LoginForm({ onLogin }) {
         </button>
       </div>
 
-      {error && (
-        <div className="error" style={{ marginTop: 10 }}>
-          {error}
-        </div>
-      )}
-
+      {error && <div className="error" style={{ marginTop: 10 }}>{error}</div>}
       {userNotFound && (
         <div className="error" style={{ marginTop: 10 }}>
           El email no está registrado.
-          <button
-            style={{ marginLeft: 8 }}
-            type="button"
-            onClick={() => navigate("/register")}
-            disabled={isLoading}
-          >
+          <button style={{ marginLeft: 8 }} type="button" onClick={() => navigate("/register")} disabled={isLoading}>
             Ir a registro
-          </button>
-        </div>
-      )}
-
-      {success && (
-        <div className="success" style={{ marginTop: 10 }}>
-          {success}
-          <button
-            style={{ marginLeft: 8 }}
-            type="button"
-            onClick={() => navigate("/")}
-            disabled={isLoading}
-          >
-            Aceptar
           </button>
         </div>
       )}
@@ -146,4 +79,3 @@ export default function LoginForm({ onLogin }) {
 LoginForm.propTypes = {
   onLogin: PropTypes.func.isRequired,
 };
-

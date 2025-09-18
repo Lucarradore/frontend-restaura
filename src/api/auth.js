@@ -1,33 +1,24 @@
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
 
-export async function register(name, lastName, email, password) {
+export async function registerUser(data) {
   const res = await fetch(`${API_BASE}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, lastName, email, password }),
+    body: JSON.stringify(data),
   });
-
   return res.json();
 }
 
-export async function login(email, password) {
+export async function loginUser(data) {
   const res = await fetch(`${API_BASE}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify(data),
   });
-
-  const data = await res.json();
-
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-
-    if (data.user) {
-      localStorage.setItem("user", JSON.stringify(data.user));
-    }
-  }
-
-  return data;
+  const result = await res.json();
+  if (result.token) localStorage.setItem("token", result.token);
+  if (result.user) localStorage.setItem("user", JSON.stringify(result.user));
+  return result;
 }
 
 export function authHeader() {
@@ -37,11 +28,7 @@ export function authHeader() {
 
 export async function getProfile() {
   const res = await fetch(`${API_BASE}/users/profile`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      ...authHeader(),
-    },
+    headers: { "Content-Type": "application/json", ...authHeader() },
   });
   return res.json();
 }
